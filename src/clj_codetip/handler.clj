@@ -19,7 +19,8 @@
           (condp = expiry
             "hour" (t/hours 1)
             "day"  (t/days 1)
-            "week" (t/weeks 1))))
+            "week" (t/weeks 1)
+            (t/hours 1))))
 
 
 (defn- paste-title
