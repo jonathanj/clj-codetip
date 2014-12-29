@@ -76,4 +76,5 @@
     (some-> (-paste-by-id {:id id} {:connection tx})
             first
             (update-in [:created] from-long)
-            (update-in [:expires] from-long))))
+            (update-in [:expires] from-long)
+            (clojure.set/rename-keys {:content_type :content-type}))))

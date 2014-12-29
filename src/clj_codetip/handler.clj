@@ -24,10 +24,10 @@
 
 (defn- paste-title
   "Determine a suitable title for a paste."
-  [{:keys [filename content_type]}]
+  [{:keys [filename content-type]}]
   (format "Codetip \u2013 %s (%s)"
           filename
-          (view/syntax-mime-modes content_type)))
+          (view/syntax-mime-modes content-type)))
 
 
 (defroutes app

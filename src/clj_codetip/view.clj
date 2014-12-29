@@ -171,7 +171,7 @@
 
 (defn paste
   "Read-only paste view."
-  [{:keys [content content_type expires]}]
+  [{:keys [content content-type expires]}]
   (list
    [:div.sub-navbar
     [:a.btn {:href "/"} "New paste"]
@@ -182,7 +182,7 @@
                      :readonly "readonly"}
                     "content" content)]
    (include-js (codemirror-uri "addon/runmode/" "runmode.min.js"))
-   (javascript-tag (format "initialisePaste(true, \"%s\");" content_type))))
+   (javascript-tag (format "initialisePaste(true, \"%s\");" content-type))))
 
 
 (def ^:private syntax-modes-select (map (juxt :name :mime) syntax-modes))
