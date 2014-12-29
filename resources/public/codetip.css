@@ -1,0 +1,158 @@
+/**
+base03: #002b36
+base02: #073642
+base01: #586e75
+base0: #839496
+*/
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    background: #002b36;
+    color: #839496;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 0.85em;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-right: 0.5em;
+}
+
+select {
+    height: 2.6em;
+}
+
+a.btn {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn,
+input,
+select {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 0.8em;
+    border: 2px solid #eee;
+    border-radius: 0.35em;
+    background: transparent;
+    color: #eee;
+    margin-right: 1em;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+.btn,
+select,
+input[type="submit"] {
+    padding: 0.5em 1.5em;
+    cursor: pointer;
+}
+
+.btn,
+input[type="submit"] {
+    margin: 0 2em 0 1em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btn:hover,
+select:hover,
+input[type="submit"]:hover {
+    background: #eee;
+    color: #002b36;
+}
+
+.navbar,
+.sub-navbar {
+    font-size: 1.1em;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.125em;
+    padding: 0.5em 0.5em;
+    z-index: 10;
+    background: rgba(7, 54, 66, 0.8); /*#073642*/
+}
+
+.sub-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0.5em 0.5em;
+    z-index: 10;
+}
+
+.navbar h1 {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+
+.navbar h1 a {
+    color: #839496;
+    text-decoration: none;
+}
+
+.page-content {
+    position: absolute;
+    top: 3.5em;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.paste-content {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#content {
+    background: #002b36;
+    color: #839496;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    font-family: "Monaco", "Source Code Pro", "DejaVu Sans Mono", monospace;
+    width: 100%;
+    height: 100%;
+}
+
+.new-paste {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.CodeMirror {
+    font-family: "Monaco", "Source Code Pro", "DejaVu Sans Mono", monospace;
+    height: auto;
+}
+
+.CodeMirror pre.CodeMirror-placeholder {
+    color: #586e75;
+    text-align: center;
+}
+
+.cm-s-solarized.CodeMirror {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
