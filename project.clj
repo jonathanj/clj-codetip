@@ -24,12 +24,11 @@
                  [jarohen/chime "0.1.6"]
                  [org.xerial/sqlite-jdbc "3.8.7"]]
   :main clj-codetip.core
-  :aot [clj-codetip.streams.limited-input-stream]
-  :profiles {:uberjar {:aot :all}
-             :dev     {:env  {:codetip-dev true
-                              :codetip-db-spec "jdbc:sqlite:codetip-dev.db"}
-                       :ring {:handler clj-codetip.handler/dev-handler
-                              :init    clj-codetip.handler/dev-init}}}
+  :aot [clj-codetip.streams.limited-input-stream clj-codetip.core]
+  :profiles {:dev {:env  {:codetip-dev     true
+                          :codetip-db-spec "jdbc:sqlite:codetip-dev.db"}
+                   :ring {:handler clj-codetip.handler/dev-handler
+                          :init    clj-codetip.handler/dev-init}}}
   :joplin {:migrators {:sql-mig "joplin/migrators/sql"}
            :databases {:sql-dev  {:type :jdbc :url "jdbc:sqlite:codetip-dev.db"}
                        :sql-prod {:type :jdbc :url "jdbc:sqlite:codetip-prod.db"}}
