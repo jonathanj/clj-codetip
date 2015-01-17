@@ -156,6 +156,7 @@
                       (codemirror-uri "addon/mode/" "loadmode.min.js")
                       (codemirror-uri "addon/display/" "placeholder.js")
                       (codemirror-uri "mode/" "meta.min.js")
+                      (cdnjs-uri "crel/2.1.8/crel.min.js")
                       (cdnjs-uri "mousetrap/1.4.6/mousetrap.min.js")
                       (cdnjs-uri "mousetrap/1.4.6/mousetrap-global-bind.min.js")
                       "/static/codetip.js")
@@ -189,10 +190,8 @@
                      :readonly "readonly"}
                     "content" content)]
    (include-js (codemirror-uri "addon/runmode/" "runmode.min.js"))
-   (javascript-tag (format "initialisePaste(true, \"%s\");" content-type))))
+   (javascript-tag (format "initialisePasteView(\"%s\");" content-type))))
 
-
-(def ^:private syntax-modes-select (map (juxt :name :mime) syntax-modes))
 
 (defn new-paste
   "Paste creation view."
@@ -204,8 +203,7 @@
                  [:div.sub-navbar
                   (form/submit-button "Create paste")
                   (form/label "content-type" "Syntax")
-                  (form/drop-down {:id "content-type"
-                                   :onchange "modeInputChanged(this);"}
+                  (form/drop-down {:id "content-type"}
                                   "content-type"
                                   syntax-modes-select
                                   "text/plain")
@@ -218,6 +216,6 @@
                                   "week")]
                  [:div#focus.paste-content
                   (form/text-area {:id "content"
-                                   :placeholder "Paste content here"}
+                                   :placeholder "Paste content or drag files here"}
                                   "content" "")])
-   (javascript-tag "initialisePaste();")])
+   (javascript-tag "initialiseNewPaste();")])

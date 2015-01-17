@@ -156,3 +156,34 @@ input[type="submit"]:hover {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.dropzone-zone {
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.dropzone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 0.15em dashed #fff;
+    margin: 0.75em;
+}
+
+.dropzone-text {
+    position: absolute;
+    font-size: 200%;
+    color: #fff;
+    margin-top: -1em;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
