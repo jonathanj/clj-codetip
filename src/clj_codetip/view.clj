@@ -191,7 +191,8 @@
   "Paste creation view."
   []
   [:div.new-paste
-   (form/form-to {:id "form"}
+   (form/form-to {:id "form"
+                  :enctype "multipart/form-data"}
                  [:post "/"]
                  [:div.sub-navbar
                   (form/submit-button "Create paste")

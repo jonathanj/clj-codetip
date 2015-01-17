@@ -2,14 +2,18 @@
   (:require [liberator.core :refer [resource]]
             [liberator.dev :refer [wrap-trace]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+            [ring.middleware.multipart-params.temp-file :refer [temp-file-store]]
             [ring.server.standalone :refer [serve]]
             [clojure.java.jdbc :refer [with-db-connection]]
             [clojure.tools.logging :as log]
             [compojure.core :refer [defroutes ANY GET POST]]
             [compojure.route :as route]
+            [environ.core :refer [env]]
             [clj-time.core :as t]
             [clj-codetip.database :as db]
-            [clj-codetip.view :as view]))
+            [clj-codetip.view :as view]
+            [clj-codetip.streams :refer [limited-input-stream]]))
 
 
 (defn- expiry-name->date
@@ -98,11 +102,27 @@
       (handler (assoc request :db-conn conn)))))
 
 
+(defn limited-store [store max-length]
+  ""
+  (fn [item]
+    (store (update-in item [:stream] limited-input-stream max-length))))
+
+
+(def max-upload-size (* 1024 1024 4))
+
+
 (defn build-handler
   "Build a ring handler."
   [db-spec dev?]
   (cond-> app
           dev? (wrap-trace :header :ui)
-          true (-> wrap-params
-                   (wrap-sql-connection db-spec)
-                   log-request)))
+          true (-> log-request
+                   ;wrap-params
+                   (wrap-multipart-params
+                    {:store (-> (temp-file-store)
+                                (limited-store max-upload-size))})
+                   (wrap-sql-connection db-spec))))
+
+(def db-spec (env :codetip-db-spec))
+(def dev-handler (build-handler db-spec (env :codetip-dev)))
+(def dev-init (partial init db-spec))

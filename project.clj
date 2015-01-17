@@ -24,6 +24,7 @@
                  [jarohen/chime "0.1.6"]
                  [org.xerial/sqlite-jdbc "3.8.7"]]
   :main clj-codetip.core
+  :aot [clj-codetip.streams.limited-input-stream]
   :profiles {:uberjar {:aot :all}
              :dev     {:env  {:codetip-dev true}}}
   :joplin {:migrators {:sql-mig "joplin/migrators/sql"}
