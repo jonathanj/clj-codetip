@@ -26,10 +26,13 @@
   :main clj-codetip.core
   :aot [clj-codetip.streams.limited-input-stream]
   :profiles {:uberjar {:aot :all}
-             :dev     {:env  {:codetip-dev true}}}
+             :dev     {:env  {:codetip-dev true
+                              :codetip-db-spec "jdbc:sqlite:codetip-dev.db"}
+                       :ring {:handler clj-codetip.handler/dev-handler
+                              :init    clj-codetip.handler/dev-init}}}
   :joplin {:migrators {:sql-mig "joplin/migrators/sql"}
            :databases {:sql-dev  {:type :jdbc :url "jdbc:sqlite:codetip-dev.db"}
-                       :sql-prod {:type :jdbc :url "jdbc:sqlit:ecodetip-prod.db"}}
+                       :sql-prod {:type :jdbc :url "jdbc:sqlite:codetip-prod.db"}}
            :environments {:dev  [{:db       :sql-dev
                                   :migrator :sql-mig}]
                           :prod [{:db       :sql-prod
