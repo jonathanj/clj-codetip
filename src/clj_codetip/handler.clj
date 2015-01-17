@@ -32,7 +32,7 @@
   [{:keys [filename content-type]}]
   (format "Codetip \u2013 %s (%s)"
           filename
-          (view/syntax-mime-modes content-type)))
+          (view/syntax-mime-modes content-type "Unknown")))
 
 
 (defroutes app
@@ -90,20 +90,23 @@
 
 
 (defn log-request [handler]
+  "Log request information."
   (fn [req]
     (log/info (apply format "%S %s" ((juxt :request-method :uri) req)))
-    (log/debug req)
+    (log/info req)
     (handler req)))
 
 
 (defn wrap-sql-connection [handler db-spec]
+  "Wrap a request with database connection information."
   (fn [request]
     (with-db-connection [conn db-spec]
       (handler (assoc request :db-conn conn)))))
 
 
 (defn limited-store [store max-length]
-  ""
+  "Replace the `:stream` value with a stream that limits the number of bytes
+  written to it."
   (fn [item]
     (store (update-in item [:stream] limited-input-stream max-length))))
 
