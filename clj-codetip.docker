@@ -1,0 +1,14 @@
+FROM mithrandi/lein
+MAINTAINER "Tristan Seligmann <mithrandi@mithrandi.net>"
+ADD . /srv/codetip/src
+WORKDIR /srv/codetip/src
+RUN lein uberjar
+RUN mv target/codetip.jar /srv/codetip/clj-codetip.jar
+RUN mkdir /srv/codetip/db
+RUN lein with-profile prod joplin migrate prod
+RUN rm -rf /root/.lein /root/.m2
+VOLUME ["/srv/codetip/db"]
+ENTRYPOINT ["/usr/bin/java", "-jar", "/srv/codetip/clj-codetip.jar", \
+            "--database-uri", "jdbc:sqlite:/srv/codetip/db/codetip.db", \
+            "--port", "80"]
+EXPOSE 80
