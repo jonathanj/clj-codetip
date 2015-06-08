@@ -10,6 +10,8 @@
             [compojure.core :refer [defroutes ANY GET POST]]
             [compojure.route :as route]
             [environ.core :refer [env]]
+            [joplin.core :as joplin]
+            [joplin.jdbc.database]
             [clj-time.core :as t]
             [clj-codetip.database :as db]
             [clj-codetip.view :as view]
@@ -85,6 +87,10 @@
    Schedule unexpired paste deletes and delete expired pastes."
   [db-spec]
   (let [now (t/now)]
+    (joplin/migrate-db
+     {:db {:type :jdbc
+           :url (:connection-uri db-spec)}
+      :migrator "migrators/sql"})
     (db/schedule-unexpired-deletes db-spec now)
     (db/delete-expired-pastes! db-spec now)))
 
