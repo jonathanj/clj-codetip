@@ -90,7 +90,7 @@
     (joplin/migrate-db
      {:db {:type :jdbc
            :url (:connection-uri db-spec)}
-      :migrator "migrators/sql"})
+      :migrator "joplin/migrators/sql"})
     (db/schedule-unexpired-deletes db-spec now)
     (db/delete-expired-pastes! db-spec now)))
 
