@@ -179,10 +179,11 @@
 
 (defn paste
   "Read-only paste view."
-  [{:keys [content content-type expires]}]
+  [{:keys [content content-type expires]} id]
   (list
    [:div.sub-navbar
     [:a.btn {:href "/"} "New paste"]
+    [:a.btn {:href (format "/%s/raw" id)} "View Raw"]
     [:label "Expires"]
     [:span (f/unparse (f/formatters :rfc822) expires)]]
    [:div#focus.paste-content

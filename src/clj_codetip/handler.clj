@@ -7,7 +7,7 @@
             [ring.server.standalone :refer [serve]]
             [clojure.java.jdbc :refer [with-db-connection]]
             [clojure.tools.logging :as log]
-            [compojure.core :refer [defroutes ANY GET POST]]
+            [compojure.core :refer [context defroutes ANY GET POST]]
             [compojure.route :as route]
             [environ.core :refer [env]]
             [joplin.core :as joplin]
@@ -40,22 +40,41 @@
 (defroutes app
   (route/resources "/static")
 
-  (GET  "/:id" [id]
-        (resource
-         :available-media-types ["text/html"]
+  (context "/:id" [id]
+           (GET "/" []
+                (resource
+                 :available-media-types ["text/html"]
 
-         :service-available?
-         (fn [{{conn :db-conn} :request}]
-           {::paste (db/paste-by-id conn id)})
+                 :service-available?
+                 (fn [{{conn :db-conn} :request}]
+                   {::paste (db/paste-by-id conn id)})
 
-         :exists?
-         (fn [{paste ::paste}]
-           (not (nil? paste)))
+                 :exists?
+                 (fn [{paste ::paste}]
+                   (not (nil? paste)))
 
-         :handle-ok
-         (fn [{paste ::paste}]
-           (view/application (paste-title paste)
-                             (view/paste paste)))))
+                 :handle-ok
+                 (fn [{paste ::paste}]
+                   (view/application (paste-title paste)
+                                     (view/paste paste id)))))
+
+
+           (GET "/raw" []
+                (resource
+                 :available-media-types ["text/plain"]
+
+                 :service-available?
+                 (fn [{{conn :db-conn} :request}]
+                   {::paste (db/paste-by-id conn id)})
+
+                 :exists?
+                 (fn [{paste ::paste}]
+                   (not (nil? paste)))
+
+                 :handle-ok
+                 (fn [{paste ::paste}]
+                   (:content paste)))))
+
 
   (ANY  "/" []
         (resource
