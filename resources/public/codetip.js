@@ -44,10 +44,11 @@ _addEventListener('load', function () {
 function _initialiseBasicPasteView() {
     window.editor = CodeMirror.fromTextArea(
         document.getElementById('content'),
-        {lineNumbers: true,
-         theme: 'solarized dark',
-         autofocus: true,
-         dragDrop: false});
+        {'lineNumbers': true,
+         'lineWrapping': true,
+         'theme': 'solarized dark',
+         'autofocus': true,
+         'dragDrop': false});
 }
 
 
