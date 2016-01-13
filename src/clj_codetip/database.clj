@@ -34,7 +34,11 @@
 (defn- -schedule-paste-expiry
   "Schedule the expired paste cleanup to run."
   [db-spec expires now]
-  (chime-at [expires] (fn [_] (delete-expired-pastes! db-spec now))))
+  (chime-at [expires]
+            (fn [_]
+              ; Intentionally drop the `:connection` key to avoid stale
+              ; connections later.
+              (delete-expired-pastes! (dissoc db-spec :connection) now))))
 
 
 (defquery -unexpired-pastes "sql/unexpired_pastes.sql")
