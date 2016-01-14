@@ -33,12 +33,12 @@
 
 (defn- -schedule-paste-expiry
   "Schedule the expired paste cleanup to run."
-  [db-spec expires now]
+  [db-spec expires]
   (chime-at [expires]
             (fn [_]
               ; Intentionally drop the `:connection` key to avoid stale
               ; connections later.
-              (delete-expired-pastes! (dissoc db-spec :connection) now))))
+              (delete-expired-pastes! (dissoc db-spec :connection) expires))))
 
 
 (defquery -unexpired-pastes "sql/unexpired_pastes.sql")
@@ -48,7 +48,7 @@
   [db-spec now]
   (j/with-db-transaction [tx db-spec]
     (doseq [p (-unexpired-pastes {:now (to-sql-time now)} {:connection tx})]
-      (-schedule-paste-expiry db-spec (-> :expires p from-long) now))))
+      (-schedule-paste-expiry db-spec (-> :expires p from-long)))))
 
 
 (defquery -create-paste! "sql/create_paste.sql")
@@ -67,7 +67,7 @@
                        :content      content
                        :content_type content-type}
                       {:connection tx}))
-    (-schedule-paste-expiry db-spec expires (t/now))
+    (-schedule-paste-expiry db-spec expires)
     id))
 
 
