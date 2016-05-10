@@ -7,7 +7,7 @@
             [lein-environ "1.0.0"]
             [joplin.lein "0.2.2"]]
   :source-paths ["src" "joplin"]
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/java.jdbc "0.5.8"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.3.1"]
