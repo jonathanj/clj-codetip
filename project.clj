@@ -28,11 +28,4 @@
   :profiles {:dev {:env  {:codetip-dev     true
                           :codetip-db-spec "jdbc:sqlite:codetip-dev.db"}
                    :ring {:handler clj-codetip.handler/dev-handler
-                          :init    clj-codetip.handler/dev-init}}}
-  :joplin {:migrators {:sql-mig "joplin/migrators/sql"}
-           :databases {:sql-dev  {:type :jdbc :url "jdbc:sqlite:codetip-dev.db"}
-                       :sql-prod {:type :jdbc :url "jdbc:sqlite:codetip-prod.db"}}
-           :environments {:dev  [{:db       :sql-dev
-                                  :migrator :sql-mig}]
-                          :prod [{:db       :sql-prod
-                                  :migrator :sql-mig}]}})
+                          :init    clj-codetip.handler/dev-init}}})
