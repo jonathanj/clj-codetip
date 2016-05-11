@@ -7,9 +7,6 @@ Codetip is a simple pastebin.
     # Clone repo.
     $ git clone http://github.com/jonathanj/clj-codetip
 
-    # Initialise the database.
-    $ lein joplin migrate prod
-
     # Build standalone jar.
     $ lein uberjar
 
